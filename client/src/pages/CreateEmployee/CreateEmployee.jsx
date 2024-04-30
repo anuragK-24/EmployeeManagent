@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import "./CreateEmployee.scss";
 
 export default function CreateEmployee() {
-  const { user } = useUser(); 
+  const { user } = useUser();
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [formData, setFormData] = useState({
@@ -16,12 +17,7 @@ export default function CreateEmployee() {
     course: "",
     image: "",
   });
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.id]: e.target.value,
-  //   });
-  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
@@ -44,7 +40,7 @@ export default function CreateEmployee() {
   };
   return (
     <div className="CreateEmployee">
-      <h1 className="CreateEmployee_Heading">CreateEmployee</h1>
+      <h1 className="CreateEmployee_Heading">Create Employee</h1>
       <div className="CreateEmployee_Content">
         <div className="CreateEmployee_Content_FormContainer">
           <form
@@ -147,7 +143,7 @@ export default function CreateEmployee() {
               className="CreateEmployee_Content_FormContainer_Form_Button"
               type="submit"
             >
-              Post
+              Create
             </button>
           </form>
           {/* {error && (

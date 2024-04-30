@@ -3,24 +3,21 @@
   color: #fff;
 }
 
-.navbar__list {
-  list-style: none;
-  // padding: 0;
+.navbar {
   display: flex;
-  // justify-content: space-around;
+  justify-content: space-between;
+}
+
+.navbar__list,
+.navbar__leftList {
+  display: flex;
+  list-style: none;
 }
 
 .navbar__item {
-  padding: 15px;
+  margin-right: 10px; /* Add some space between the items */
 }
-
 .navbar__item a {
   color: #fff;
   text-decoration: none;
-}
-
-.navbar__leftList {
-  list-style: none;
-  display: flex;
-  
 }

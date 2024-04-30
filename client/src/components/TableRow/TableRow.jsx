@@ -13,17 +13,20 @@ export default function TableRow({ rowData }) {
   }
   const handleEdit = () => {
     navigate(`/updateEmployee/${rowData._id}`);
-  }
+  };
   const handleDelete = async () => {
     alert("Are you sure you want to delete this employee?");
     try {
-      const response = await fetch(`http://localhost:3000/emp/delete/` + rowData._id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/emp/delete/` + rowData._id,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
@@ -31,28 +34,31 @@ export default function TableRow({ rowData }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <table className="TableRow">
-      <tr>
-        <td className="TableRow__Id">{rowData.id}</td>
-        <td className="TableRow__Image">
-          <img
-            style={{ height: "30px", width: "30px" }}
-            src={rowData.image}
-            alt=""
-          />
-        </td>
-        <td className="TableRow__Name">{rowData.name}</td>
-        <td className="TableRow__Email">{rowData.email}</td>
-        <td className="TableRow__Mobile">{rowData.mobile}</td>
-        <td className="TableRow__Designation">{rowData.desgination}</td>
-        <td className="TableRow__Gender">{rowData.gender}</td>
-        <td className="TableRow__Course">{rowData.course}</td>
-        <td className="TableRow__Date">{formatDate(rowData.createdDate)}</td>
-        <td className="TableRow_Action"><button onClick={handleEdit}>Edit</button>/ <button onClick={handleDelete}>Delete</button></td>
-      </tr>
-    </table>
+    // <table className="TableRow">
+    <tr>
+      <td className="TableRow__Id">{rowData.id}</td>
+      <td className="TableRow__Image">
+        <img
+          style={{ height: "30px", width: "30px" }}
+          src={rowData.image}
+          alt=""
+        />
+      </td>
+      <td className="TableRow__Name">{rowData.name}</td>
+      <td className="TableRow__Email">{rowData.email}</td>
+      <td className="TableRow__Mobile">{rowData.mobile}</td>
+      <td className="TableRow__Designation">{rowData.desgination}</td>
+      <td className="TableRow__Gender">{rowData.gender}</td>
+      <td className="TableRow__Course">{rowData.course}</td>
+      <td className="TableRow__Date">{formatDate(rowData.createdDate)}</td>
+      <td className="TableRow_Action">
+        <button onClick={handleEdit}>Edit</button>/{" "}
+        <button onClick={handleDelete}>Delete</button>
+      </td>
+    </tr>
+    // </table>
   );
 }

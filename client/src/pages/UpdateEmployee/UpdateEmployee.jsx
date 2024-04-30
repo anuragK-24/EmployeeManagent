@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import "./UpdateEmployee.scss";
 
 export default function UpdateEmployee() {
   const { user } = useUser();
@@ -72,12 +73,12 @@ export default function UpdateEmployee() {
   };
 
   return (
-    <div className="YachtEdit">
-      <h1 className="YachtEdit_Heading">YachtEdit</h1>
-      <div className="YachtEdit_Content">
-        <div className="YachtEdit_Content_FormContainer">
+    <div className="UpdateEmployee">
+      <h1 className="UpdateEmployee_Heading">Employee Edit</h1>
+      <div className="UpdateEmployee_Content">
+        <div className="UpdateEmployee_Content_FormContainer">
           <form
-            className="CreateEmployee_Content_FormContainer_Form"
+            className="UpdateEmployee_Content_FormContainer_Form"
             onSubmit={handleSubmit}
           >
             <LabelledInput
@@ -173,10 +174,10 @@ export default function UpdateEmployee() {
             />
 
             <button
-              className="CreateEmployee_Content_FormContainer_Form_Button"
+              className="UpdateEmployee_Content_FormContainer_Form_Button"
               type="submit"
             >
-              Post
+              Edit
             </button>
           </form>
         </div>

@@ -3,9 +3,11 @@ import TableRow from "../TableRow/TableRow";
 import { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import LabelledInput from "../LabelledInput/LabelledInput";
 
 export default function Employees() {
   const { user } = useUser();
+  const [searchValue, setSearchValue] = useState("");
   const [employees, setEmployees] = useState([]);
   const allEmployee = async () => {
     try {
@@ -29,11 +31,21 @@ export default function Employees() {
   useEffect(() => {
     allEmployee();
   }, []);
+  const handleSearch = (e) => {
+    const searchValue = e.target.value;
+    setSearchValue(searchValue);
+    const filteredData = employees.filter((emp) =>
+      emp.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setEmployees(filteredData);
+  }
   return (
     <>
-    <div>
-      <Link to="/createEmployee">Create Employee</Link>
-    </div>
+      <div>
+        <Link to="/createEmployee">Create Employee</Link>
+      </div>
+      <LabelledInput onChange={handleSearch} value={searchValue} label="Search" type="text" />
+      <h3>Total count : {employees.length} </h3>
       <table>
         <thead>
           <tr>
@@ -49,10 +61,9 @@ export default function Employees() {
             <th className="TableRow__Action">Action</th>
           </tr>
         </thead>
+        {employees.length !== 0 &&
+          employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
       </table>
-
-      {employees.length !== 0 &&
-        employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
     </>
   );
 }

@@ -1,4 +1,4 @@
-.CreateYacht {
+.CreateEmployee {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -89,7 +89,7 @@
   }
   
   @media only screen and (max-width: 600px) {
-    .CreateYacht {
+    .CreateEmployee {
       &_Heading {
         margin: 0.5em;
       }
