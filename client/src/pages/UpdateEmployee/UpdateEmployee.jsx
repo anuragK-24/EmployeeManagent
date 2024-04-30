@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import LabelledInput from "../../components/LabelledInput/LabelledInput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 
-export default function CreateEmployee() {
-  const { user } = useUser(); 
+export default function UpdateEmployee() {
+  const { user } = useUser();
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
+  const { id } = useParams();
+  console.log("Value of id ", id);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,18 +19,43 @@ export default function CreateEmployee() {
     course: "",
     image: "",
   });
-  // const handleChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.id]: e.target.value,
-  //   });
-  // };
+  const findEmployee = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/emp/find/` + id, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+      const data = await response.json();
+      setFormData({
+        name: data.name,
+        email: data.email,
+        mobile: data.mobile,
+        desgination: data.desgination,
+        gender: data.gender,
+        course: data.course,
+        image: data.image,
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    findEmployee();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("http://localhost:3000/emp/create", {
-        method: "POST",
+      const response = await fetch(`http://localhost:3000/emp/update/`+id, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
@@ -42,11 +70,12 @@ export default function CreateEmployee() {
       setErrorMsg(error.message);
     }
   };
+
   return (
-    <div className="CreateEmployee">
-      <h1 className="CreateEmployee_Heading">CreateEmployee</h1>
-      <div className="CreateEmployee_Content">
-        <div className="CreateEmployee_Content_FormContainer">
+    <div className="YachtEdit">
+      <h1 className="YachtEdit_Heading">YachtEdit</h1>
+      <div className="YachtEdit_Content">
+        <div className="YachtEdit_Content_FormContainer">
           <form
             className="CreateEmployee_Content_FormContainer_Form"
             onSubmit={handleSubmit}
@@ -150,16 +179,6 @@ export default function CreateEmployee() {
               Post
             </button>
           </form>
-          {/* {error && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              There was an error creating a listing! Try again.
-            </div>
-          )}
-          {emptyFields && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              All fields must be filled!
-            </div>
-          )} */}
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import NavBar from "./components/NavBar/NavBar";
 import Employees from "./components/Employees/Employees";
 import CreateEmployee from "./pages/CreateEmployee/CreateEmployee";
+import UpdateEmployee from "./pages/UpdateEmployee/UpdateEmployee";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<ProtectedAdminRoute />} />
           <Route path="/allEmployee" element={<ProtectedEmployeesRoute />} />
           <Route path="/createEmployee" element={<ProtectedCreateEmployeeRoute />} />
+          <Route path="/updateEmployee/:id" element={<ProtectedUpdateEmployeeRoute />} />
         </Routes>
       </Router>
     </UserProvider>
@@ -46,5 +48,9 @@ function ProtectedEmployeesRoute() {
 function ProtectedCreateEmployeeRoute() {
   const { user } = useUser();
   return user ? <CreateEmployee /> : <Login />;
+}
+function ProtectedUpdateEmployeeRoute() {
+  const { user } = useUser();
+  return user ? <UpdateEmployee /> : <Login />;
 }
 export default App;
