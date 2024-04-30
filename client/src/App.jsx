@@ -7,7 +7,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        fdssd
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

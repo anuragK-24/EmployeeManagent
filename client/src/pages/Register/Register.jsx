@@ -1,16 +1,15 @@
 import LabelledInput from "../../components/LabelledInput/LabelledInput";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import { useHistory } from "react-router-dom";
 import "./Register.scss";
 
 export default function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
-  //   const history = useHistory();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -31,7 +30,7 @@ export default function Register() {
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
-      history.push("/login");
+      navigate("/login");
     } catch (error) {
       setErrorMsg(error.message);
     }

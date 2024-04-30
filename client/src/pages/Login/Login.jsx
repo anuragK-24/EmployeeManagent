@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "./Login.scss";
 import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { useState } from "react";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,7 +20,7 @@ export default function Login() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("http://localhost:4000/api/login", {
+      const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,7 +30,8 @@ export default function Login() {
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
-      history.push("/dashboard");
+      navigate("/dashboard");
+      console.log("Login successful")
     } catch (error) {
       setErrorMsg(error.message);
     }
