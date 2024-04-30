@@ -10,3 +10,41 @@ table {
     width: auto;
     height: auto;
   }
+
+  .TableRow {
+    width: 100%;
+    border-collapse: collapse;
+    &__Id{
+        min-width: 2em;
+    }
+    &__Image{
+        min-width: 3em;
+    }
+    &__Name{
+        min-width: 4em;
+    }
+    &__Email{
+        min-width: 4em;
+
+    }
+    &__Mobile{
+        min-width: 4em;
+
+    }
+    &__Designation{
+        min-width: 3em;
+    }
+    &__Gender{
+        min-width: 1em;
+    }
+    &__Course{
+        min-width: 2em;
+    }
+    &__Date{
+        min-width: 3em;
+    }
+    &__Action{
+        min-width: 5em;
+    }
+  }
+  

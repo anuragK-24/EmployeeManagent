@@ -42,16 +42,16 @@ export default function Dashboard() {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Designation</th>
-            <th>Gender</th>
-            <th>Course</th>
-            <th>Created Date</th>
-            <th>Action</th>
+            <th className="TableRow__Id">ID</th>
+            <th className="TableRow__Image">Image</th>
+            <th className="TableRow__Name">Name</th>
+            <th className="TableRow__Email">Email</th>
+            <th className="TableRow__Mobile">Mobile</th>
+            <th className="TableRow__Designation">Designation</th>
+            <th className="TableRow__Gender">Gender</th>
+            <th className="TableRow__Course">Course</th>
+            <th className="TableRow__Date">Created Date</th>
+            <th className="TableRow__Action">Action</th>
           </tr>
         </thead>
       </table>

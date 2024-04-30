@@ -10,22 +10,22 @@ export default function TableRow({ rowData }) {
   return (
     <table className="TableRow">
       <tr>
-        <td className="TableRow__Data">{rowData.id}</td>
-        <td className="TableRow__Data">
+        <td className="TableRow__Id">{rowData.id}</td>
+        <td className="TableRow__Image">
           <img
             style={{ height: "30px", width: "30px" }}
             src={rowData.image}
             alt=""
           />
         </td>
-        <td>{rowData.name}</td>
-        <td>{rowData.email}</td>
-        <td>{rowData.mobile}</td>
-        <td>{rowData.desgination}</td>
-        <td>{rowData.gender}</td>
-        <td>{rowData.course}</td>
-        <td>{formatDate(rowData.createdDate)}</td>
-        <td><button>Edit</button>/ <button>Delete</button></td>
+        <td className="TableRow__Name">{rowData.name}</td>
+        <td className="TableRow__Email">{rowData.email}</td>
+        <td className="TableRow__Mobile">{rowData.mobile}</td>
+        <td className="TableRow__Designation">{rowData.desgination}</td>
+        <td className="TableRow__Gender">{rowData.gender}</td>
+        <td className="TableRow__Course">{rowData.course}</td>
+        <td className="TableRow__Date">{formatDate(rowData.createdDate)}</td>
+        <td className="TableRow_Action"><button>Edit</button>/ <button>Delete</button></td>
       </tr>
     </table>
   );
