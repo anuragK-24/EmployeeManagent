@@ -1,0 +1,19 @@
+.TableRow {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .TableRow tr {
+    border: 1px solid #000;
+  }
+  
+  .TableRow td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .TableRow__Data {
+    width: 1%; /* This will make the column as narrow as possible */
+    white-space: nowrap; /* This will prevent the content from wrapping */
+  }
