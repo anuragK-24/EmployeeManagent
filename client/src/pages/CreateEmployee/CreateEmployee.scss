@@ -1,4 +1,4 @@
-.Register {
+.CreateYacht {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -10,11 +10,13 @@
     &_Content {
       display: flex;
       margin: 1em;
-      height: 64vh;
+      height: 86vh;
       box-shadow: 2px 1px 20px 6px grey;
-      width: 59em;
+      width: auto;
       align-items: center;
       border-radius: 13px;
+      padding: 1em;
+  
       &_Image {
         display: flex;
         flex: 1 1;
@@ -51,7 +53,7 @@
           padding: 1em;
           border-radius: 1em;
           background: #64d764;
-          max-height: 18em;
+          max-height: 24em;
           &_Notification {
             max-width: 12em;
             font-size: 0.8em;
@@ -87,7 +89,7 @@
   }
   
   @media only screen and (max-width: 600px) {
-    .Register {
+    .CreateYacht {
       &_Heading {
         margin: 0.5em;
       }

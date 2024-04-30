@@ -2,7 +2,7 @@ import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./Register.scss";
-
+import signUp_image from "../../assets/signUp.svg";
 export default function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -20,7 +20,7 @@ export default function Register() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("http://localhost:4000/api/register", {
+      const response = await fetch("http://localhost:3000/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,34 +38,46 @@ export default function Register() {
 
   return (
     <div className="Register">
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <LabelledInput
-          id="email"
-          errorMsg={errorMsg}
-          label="Email"
-          type="email"
-          value={formData.email}    
-          onChange={handleChange}
-        />
-        <LabelledInput
-          id="password"
-          label="Password"
-          errorMsg={errorMsg}
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
+      <h1 className="Register_Heading">Register</h1>
+      <div className="Register_Content">
 
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
+        <div className="Register_Content_FormContainer">
+          <form
+            className="Register_Content_FormContainer_Form"
+            onSubmit={handleSubmit}
+          >
+            <LabelledInput
+              id="email"
+              errorMsg={errorMsg}
+              label="Email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <LabelledInput
+              id="password"
+              label="Password"
+              errorMsg={errorMsg}
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
 
-      <p>
-        Forgot your password? <Link to="/forgot-password">Reset</Link>
-      </p>
+            <p>
+              Already have an account? <Link to="/login">Login</Link>
+            </p>
+
+            <p>
+              Forgot your password? <Link to="/forgot-password">Reset</Link>
+            </p>
+            <button type="submit">Register</button>
+          </form>
+        </div>
+        <div className="Register_Content_Image">
+          <img src={signUp_image} alt="Register" />
+        </div>
+
+      </div>
     </div>
   );
 }
