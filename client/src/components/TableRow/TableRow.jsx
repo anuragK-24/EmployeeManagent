@@ -54,7 +54,7 @@ export default function TableRow({ rowData }) {
       <td className="TableRow__Mobile">{rowData.mobile}</td>
       <td className="TableRow__Designation">{rowData.designation}</td>
       <td className="TableRow__Gender">{rowData.gender}</td>
-      <td className="TableRow__Course">{rowData.course}</td>
+      <td className="TableRow__Course">{rowData.course.join(', ')}</td>
       <td className="TableRow__Date">{formatDate(rowData.createdDate)}</td>
       <td className="TableRow_Action">
         <button onClick={handleEdit}>Edit</button>/{" "}

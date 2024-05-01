@@ -19,8 +19,8 @@ export default function CreateEmployee() {
     email: "",
     mobile: "",
     designation: "",
-    gender: "",
-    course: "",
+    gender: "M",
+    course: [],
     image: null,
   });
 
@@ -140,45 +140,127 @@ export default function CreateEmployee() {
                 });
               }}
             />
-            <LabelledInput
-              label={"designation"}
-              value={formData.designation} // corrected typo here
-              placeholder={"designation"}
-              type="text"
-              name="designation"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  designation: e.target.value,
-                });
-              }} // pass the whole event, not just the value
-            />
-            <LabelledInput
-              label={"Gender"}
-              value={formData.gender}
-              placeholder={"Gender"}
-              type="text"
-              name="gender"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  gender: e.target.value,
-                });
-              }}
-            />
-            <LabelledInput
-              label={"Course"}
-              value={formData.course}
-              placeholder={"Course"}
-              type="text"
-              name="course"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  course: e.target.value,
-                });
-              }}
-            />
+            <div>
+              <label>
+                Designation
+                <select
+                  value={formData.designation}
+                  name="designation"
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      designation: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="">Select designation</option>
+                  <option value="HR">HR</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Sales">Sales</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>
+                Gender:
+                <div>
+                  <input
+                    type="radio"
+                    value="M"
+                    checked={formData.gender === "M"}
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        gender: e.target.value,
+                      });
+                    }}
+                  />
+                  M
+                  <input
+                    type="radio"
+                    value="F"
+                    checked={formData.gender === "F"}
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        gender: e.target.value,
+                      });
+                    }}
+                  />
+                  F
+                </div>
+              </label>
+            </div>
+            <div>
+              <label>
+                Course:
+                <div>
+                  <input
+                    type="checkbox"
+                    value="MCA"
+                    checked={formData.course.includes("MCA")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  MCA
+                  <input
+                    type="checkbox"
+                    value="BCA"
+                    checked={formData.course.includes("BCA")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  BCA
+                  <input
+                    type="checkbox"
+                    value="BSC"
+                    checked={formData.course.includes("BSC")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  BSC
+                </div>
+              </label>
+            </div>
 
             <div className="">
               <label htmlFor="image">
