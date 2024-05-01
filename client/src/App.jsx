@@ -21,8 +21,14 @@ function App() {
           <Route path="/adminPanel" element={<ProtectedRoute />} />
           <Route path="/" element={<ProtectedAdminRoute />} />
           <Route path="/allEmployee" element={<ProtectedEmployeesRoute />} />
-          <Route path="/createEmployee" element={<ProtectedCreateEmployeeRoute />} />
-          <Route path="/updateEmployee/:id" element={<ProtectedUpdateEmployeeRoute />} />
+          <Route
+            path="/createEmployee"
+            element={<ProtectedCreateEmployeeRoute />}
+          />
+          <Route
+            path="/updateEmployee/:id"
+            element={<ProtectedUpdateEmployeeRoute />}
+          />
         </Routes>
       </Router>
     </UserProvider>
@@ -39,7 +45,7 @@ function ProtectedAdminRoute() {
 }
 function ProtectedNavBarRoute() {
   const { user } = useUser();
-  return user ? <NavBar /> : <Login />;
+  return user && <NavBar />;
 }
 function ProtectedEmployeesRoute() {
   const { user } = useUser();
