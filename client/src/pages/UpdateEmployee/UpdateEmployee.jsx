@@ -3,11 +3,13 @@ import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import "./UpdateEmployee.scss";
+import imgIcon from "../../assets/image_icon.png";
 
 export default function UpdateEmployee() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState("");
+  const [error, setError] = useState("");
+  const [emptyFields, setEmptyFields] = useState(false);
   const { id } = useParams();
   console.log("Value of id ", id);
 
@@ -15,9 +17,9 @@ export default function UpdateEmployee() {
     name: "",
     email: "",
     mobile: "",
-    desgination: "",
+    designation: "",
     gender: "",
-    course: "",
+    course: [],
     image: "",
   });
   const findEmployee = async () => {
@@ -37,7 +39,7 @@ export default function UpdateEmployee() {
         name: data.name,
         email: data.email,
         mobile: data.mobile,
-        desgination: data.desgination,
+        designation: data.designation,
         gender: data.gender,
         course: data.course,
         image: data.image,
@@ -53,25 +55,72 @@ export default function UpdateEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
+    console.log(formData.image);
     try {
-      const response = await fetch(`http://localhost:3000/emp/update/`+id, {
+      let filename = null;
+      if (formData.image) {
+        const uploadData = new FormData();
+        filename = formData.image.name;
+        uploadData.append("filename", filename);
+
+        // Append the image file directly
+        uploadData.append("image", formData.image, filename);
+
+        const options = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: uploadData,
+        };
+
+        await fetch("http://localhost:3000/upload/image", options);
+      } else {
+        setEmptyFields(true);
+        setTimeout(() => {
+          setEmptyFields(false);
+        }, 2500);
+        return;
+      }
+
+      if (
+        formData.name === "" ||
+        formData.email === "" ||
+        formData.mobile === "" ||
+        formData.designation === "" ||
+        formData.gender === "" ||
+        formData.course === ""
+      ) {
+        setEmptyFields(true);
+        setTimeout(() => {
+          setEmptyFields(false);
+        }, 2500);
+        return;
+      }
+
+      const options = {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-      navigate("/allEmployee");
+        body: JSON.stringify({
+          ...formData,
+          image: filename,
+        }),
+      };
+
+      const response = await fetch(`http://localhost:3000/emp/update/`+id, options);
+      const newEmployee = await response.json();
+      console.log(newEmployee);
+      navigate(`/allEmployee`);
     } catch (error) {
-      setErrorMsg(error.message);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
     }
   };
-
   return (
     <div className="UpdateEmployee">
       <h1 className="UpdateEmployee_Heading">Employee Edit</h1>
@@ -120,59 +169,154 @@ export default function UpdateEmployee() {
                 });
               }}
             />
-            <LabelledInput
-              label={"Designation"}
-              value={formData.desgination} // corrected typo here
-              placeholder={"Designation"}
-              type="text"
-              name="designation"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  desgination: e.target.value,
-                });
-              }} // pass the whole event, not just the value
-            />
-            <LabelledInput
-              label={"Gender"}
-              value={formData.gender}
-              placeholder={"Gender"}
-              type="text"
-              name="gender"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  gender: e.target.value,
-                });
-              }}
-            />
-            <LabelledInput
-              label={"Course"}
-              value={formData.course}
-              placeholder={"Course"}
-              type="text"
-              name="course"
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  course: e.target.value,
-                });
-              }}
-            />
-            <LabelledInput
-              label={"Image"}
-              type="text"
-              placeholder={"Image"}
-              id={"image"}
-              value={formData.image}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  image: e.target.value,
-                });
-              }}
-            />
+            <div>
+              <label>
+                Designation
+                <select
+                  value={formData.designation}
+                  name="designation"
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      designation: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="">Select designation</option>
+                  <option value="HR">HR</option>
+                  <option value="Manager">Manager</option>
+                  <option value="Sales">Sales</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label>
+                Gender:
+                <div>
+                  <input
+                    type="radio"
+                    value="M"
+                    checked={formData.gender === "M"}
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        gender: e.target.value,
+                      });
+                    }}
+                  />
+                  M
+                  <input
+                    type="radio"
+                    value="F"
+                    checked={formData.gender === "F"}
+                    onChange={(e) => {
+                      setFormData({
+                        ...formData,
+                        gender: e.target.value,
+                      });
+                    }}
+                  />
+                  F
+                </div>
+              </label>
+            </div>
+            <div>
+              <label>
+                Course:
+                <div>
+                  <input
+                    type="checkbox"
+                    value="MCA"
+                    checked={formData.course.includes("MCA")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  MCA
+                  <input
+                    type="checkbox"
+                    value="BCA"
+                    checked={formData.course.includes("BCA")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  BCA
+                  <input
+                    type="checkbox"
+                    value="BSC"
+                    checked={formData.course.includes("BSC")}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData({
+                          ...formData,
+                          course: [...formData.course, e.target.value],
+                        });
+                      } else {
+                        setFormData({
+                          ...formData,
+                          course: formData.course.filter(
+                            (course) => course !== e.target.value
+                          ),
+                        });
+                      }
+                    }}
+                  />
+                  BSC
+                </div>
+              </label>
+            </div>
 
+            <div className="">
+              <label htmlFor="image">
+                Photo{" "}
+                <img
+                  style={{ height: "2em", width: "2em" }}
+                  src={imgIcon}
+                  alt=""
+                />
+              </label>
+              <input
+                type="file"
+                id="image"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    image: e.target.files[0],
+                  });
+                }}
+              />
+              {formData.image && (
+                <div style={{ marginTop: "12px" }}>
+                  Photo name: {formData.image.name}
+                </div>
+              )}
+            </div>
             <button
               className="UpdateEmployee_Content_FormContainer_Form_Button"
               type="submit"
@@ -180,6 +324,16 @@ export default function UpdateEmployee() {
               Edit
             </button>
           </form>
+          {error && (
+            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
+              There was an error creating a listing! Try again.
+            </div>
+          )}
+          {emptyFields && (
+            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
+              All fields must be filled!
+            </div>
+          )}
         </div>
       </div>
     </div>
