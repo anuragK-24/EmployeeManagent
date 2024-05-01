@@ -21,7 +21,7 @@ const EmployeeSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    desgination: {
+    designation: {
         type: String,
         required: true,
     },

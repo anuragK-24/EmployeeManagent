@@ -70,12 +70,6 @@ export default function Employees() {
 
           {employees.length !== 0 &&
             employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
-          {employees.length !== 0 &&
-            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
-          {employees.length !== 0 &&
-            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
-          {employees.length !== 0 &&
-            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
         </table>
       </div>
     </>

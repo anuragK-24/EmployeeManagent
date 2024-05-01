@@ -34,11 +34,8 @@ export default function CreateEmployee() {
         filename = formData.image.name;
         uploadData.append("filename", filename);
 
-        // Fetch the image file as a Blob
-        const response = await fetch(formData.image);
-        const blob = await response.blob();
-
-        uploadData.append("image", blob, filename);
+        // Append the image file directly
+        uploadData.append("image", formData.image, filename);
 
         const options = {
           method: "POST",
@@ -144,9 +141,9 @@ export default function CreateEmployee() {
               }}
             />
             <LabelledInput
-              label={"Designation"}
+              label={"designation"}
               value={formData.designation} // corrected typo here
-              placeholder={"Designation"}
+              placeholder={"designation"}
               type="text"
               name="designation"
               onChange={(e) => {
