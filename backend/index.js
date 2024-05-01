@@ -4,6 +4,8 @@ const env = require("dotenv").config();
 const cors = require("cors");
 const app = express();
 const uri = process.env.MONGO_URL;
+
+
 //controllers
 const authController = require("./controllers/authController.js");
 const empolyeeController = require("./controllers/empolyeeController.js");
@@ -19,7 +21,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use("/images", express.static("public/images"));
+app.use("/images", express.static("public/images"));
 
 app.get("/", (req, res) => {
   res.send("Hello World");
