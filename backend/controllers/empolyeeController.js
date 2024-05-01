@@ -23,37 +23,18 @@ employeeController.get("/getAll", verifyToken, async (req, res) => {
   }
 });
 
-employeeController.post(
-  "/create",
-  verifyToken,
-  upload.single("image"),
-  async (req, res) => {
-    try {
-      const { name, email, designation } = req.body; // Corrected here
-
-      if (!name || !email || !designation) {
-        // Corrected here
-        return res.status(400).json({ error: "All fields are required" });
-      }
-
-      const newEmployee = new Employee({
-        name,
-        email,
-        designation, // Corrected here
-        image: req.file.path,
-      });
-
-      await newEmployee.save();
-      res.status(201).json({ message: "Employee created successfully" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+employeeController.post("/create", verifyToken, async (req, res) => {
+  try {
+    const newEmployee = await Employee.create(req.body);
+    return res.status(201).json(newEmployee);
+  } catch (error) {
+    console.error(error);
   }
-);
+});
 
 employeeController.put("/update/:id", verifyToken, async (req, res) => {
   try {
-    const updatedEmployee = await Empolyee.findByIdAndUpdate(
+    const updatedEmployee = await Employee.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -66,7 +47,7 @@ employeeController.put("/update/:id", verifyToken, async (req, res) => {
 
 employeeController.delete("/delete/:id", verifyToken, async (req, res) => {
   try {
-    await Empolyee.findByIdAndDelete(req.params.id);
+    await Employee.findByIdAndDelete(req.params.id);
     return res.status(200).json("Employee has been deleted");
   } catch (error) {
     console.error(error);
@@ -75,7 +56,7 @@ employeeController.delete("/delete/:id", verifyToken, async (req, res) => {
 
 employeeController.get("/find/:id", verifyToken, async (req, res) => {
   try {
-    const employee = await Empolyee.findById(req.params.id);
+    const employee = await Employee.findById(req.params.id);
     return res.status(200).json(employee);
   } catch (error) {
     console.error(error);

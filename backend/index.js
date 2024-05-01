@@ -9,6 +9,7 @@ const uri = process.env.MONGO_URL;
 //controllers
 const authController = require("./controllers/authController.js");
 const empolyeeController = require("./controllers/empolyeeController.js");
+const uploadController = require("./controllers/uploadController.js");
 
 mongoose.set("strictQuery", false);
 
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/images", express.static("public/images"));
+app.use("/upload", uploadController);
 
 app.get("/", (req, res) => {
   res.send("Hello World");

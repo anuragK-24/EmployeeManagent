@@ -3,39 +3,96 @@ import LabelledInput from "../../components/LabelledInput/LabelledInput";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import "./CreateEmployee.scss";
+import imgIcon from "../../assets/image_icon.png";
+
+// Import request and crypto
+import { v4 as uuidv4 } from "uuid";
 
 export default function CreateEmployee() {
   const { user } = useUser();
+  const [error, setError] = useState(false);
+  const [emptyFields, setEmptyFields] = useState(false);
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
-    desgination: "",
+    designation: "",
     gender: "",
     course: "",
-    image: "",
+    image: null,
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
+    console.log(formData.image);
     try {
-      const response = await fetch("http://localhost:3000/emp/create", {
+      let filename = null;
+      if (formData.image) {
+        const uploadData = new FormData();
+        filename = formData.image.name;
+        uploadData.append("filename", filename);
+
+        // Fetch the image file as a Blob
+        const response = await fetch(formData.image);
+        const blob = await response.blob();
+
+        uploadData.append("image", blob, filename);
+
+        const options = {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: uploadData,
+        };
+
+        await fetch("http://localhost:3000/upload/image", options);
+      } else {
+        setEmptyFields(true);
+        setTimeout(() => {
+          setEmptyFields(false);
+        }, 2500);
+        return;
+      }
+
+      if (
+        formData.name === "" ||
+        formData.email === "" ||
+        formData.mobile === "" ||
+        formData.designation === "" ||
+        formData.gender === "" ||
+        formData.course === ""
+      ) {
+        setEmptyFields(true);
+        setTimeout(() => {
+          setEmptyFields(false);
+        }, 2500);
+        return;
+      }
+
+      const options = {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-      navigate("/allEmployee");
+        body: JSON.stringify({
+          ...formData,
+          image: filename,
+        }),
+      };
+
+      const response = await fetch("http://localhost:3000/emp/create", options);
+      const newEmployee = await response.json();
+      console.log(newEmployee);
+      navigate(`/allEmployee`);
     } catch (error) {
-      setErrorMsg(error.message);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 2500);
     }
   };
   return (
@@ -88,14 +145,14 @@ export default function CreateEmployee() {
             />
             <LabelledInput
               label={"Designation"}
-              value={formData.desgination} // corrected typo here
+              value={formData.designation} // corrected typo here
               placeholder={"Designation"}
               type="text"
               name="designation"
               onChange={(e) => {
                 setFormData({
                   ...formData,
-                  desgination: e.target.value,
+                  designation: e.target.value,
                 });
               }} // pass the whole event, not just the value
             />
@@ -125,19 +182,33 @@ export default function CreateEmployee() {
                 });
               }}
             />
-            <LabelledInput
-              label={"Image"}
-              type="text"
-              placeholder={"Image"}
-              id={"image"}
-              value={formData.image}
-              onChange={(e) => {
-                setFormData({
-                  ...formData,
-                  image: e.target.value,
-                });
-              }}
-            />
+
+            <div className="">
+              <label htmlFor="image">
+                Photo{" "}
+                <img
+                  style={{ height: "2em", width: "2em" }}
+                  src={imgIcon}
+                  alt=""
+                />
+              </label>
+              <input
+                type="file"
+                id="image"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    image: e.target.files[0],
+                  });
+                }}
+              />
+              {formData.image && (
+                <div style={{ marginTop: "12px" }}>
+                  Photo name: {formData.image.name}
+                </div>
+              )}
+            </div>
 
             <button
               className="CreateEmployee_Content_FormContainer_Form_Button"
@@ -146,7 +217,7 @@ export default function CreateEmployee() {
               Create
             </button>
           </form>
-          {/* {error && (
+          {error && (
             <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
               There was an error creating a listing! Try again.
             </div>
@@ -155,7 +226,7 @@ export default function CreateEmployee() {
             <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
               All fields must be filled!
             </div>
-          )} */}
+          )}
         </div>
       </div>
     </div>
