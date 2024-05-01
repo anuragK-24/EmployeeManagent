@@ -38,32 +38,46 @@ export default function Employees() {
       emp.name.toLowerCase().includes(searchValue.toLowerCase())
     );
     setEmployees(filteredData);
-  }
+  };
   return (
     <>
       <div>
         <Link to="/createEmployee">Create Employee</Link>
       </div>
-      <LabelledInput onChange={handleSearch} value={searchValue} label="Search" type="text" />
+      <LabelledInput
+        onChange={handleSearch}
+        value={searchValue}
+        label="Search"
+        type="text"
+      />
       <h3>Total count : {employees.length} </h3>
-      <table>
-        <thead>
-          <tr>
-            <th className="TableRow__Id">ID</th>
-            <th className="TableRow__Image">Image</th>
-            <th className="TableRow__Name">Name</th>
-            <th className="TableRow__Email">Email</th>
-            <th className="TableRow__Mobile">Mobile</th>
-            <th className="TableRow__Designation">Designation</th>
-            <th className="TableRow__Gender">Gender</th>
-            <th className="TableRow__Course">Course</th>
-            <th className="TableRow__Date">Created Date</th>
-            <th className="TableRow__Action">Action</th>
-          </tr>
-        </thead>
-        {employees.length !== 0 &&
-          employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
-      </table>
+      <div style={{ height: "20em", overflow: "auto" }}>
+        <table>
+          <thead>
+            <tr>
+              <th className="TableRow__Id">ID</th>
+              <th className="TableRow__Image">Image</th>
+              <th className="TableRow__Name">Name</th>
+              <th className="TableRow__Email">Email</th>
+              <th className="TableRow__Mobile">Mobile</th>
+              <th className="TableRow__Designation">Designation</th>
+              <th className="TableRow__Gender">Gender</th>
+              <th className="TableRow__Course">Course</th>
+              <th className="TableRow__Date">Created Date</th>
+              <th className="TableRow__Action">Action</th>
+            </tr>
+          </thead>
+
+          {employees.length !== 0 &&
+            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
+          {employees.length !== 0 &&
+            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
+          {employees.length !== 0 &&
+            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
+          {employees.length !== 0 &&
+            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
+        </table>
+      </div>
     </>
   );
 }
