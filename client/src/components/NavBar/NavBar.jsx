@@ -19,7 +19,7 @@ function NavBar() {
           <li className="navbar__item">{user.others.username}</li>
         )}
         {user !== null && (
-          <li className="navbar__item" onClick={logoutUser}>
+          <li style={{cursor:"pointer"}} className="navbar__item" onClick={logoutUser}>
             Logout
           </li>
         )}

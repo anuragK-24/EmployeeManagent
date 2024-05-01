@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import LabelledInput from "../LabelledInput/LabelledInput";
 
 export default function Employees() {
+  const [hasReloaded, setHasReloaded] = useState(false);
   const { user } = useUser();
   const [searchValue, setSearchValue] = useState("");
   const [employees, setEmployees] = useState([]);
@@ -34,10 +35,16 @@ export default function Employees() {
   const handleSearch = (e) => {
     const searchValue = e.target.value;
     setSearchValue(searchValue);
-    const filteredData = employees.filter((emp) =>
-      emp.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setEmployees(filteredData);
+  
+    if (searchValue === '' && !hasReloaded) {
+      setHasReloaded(true);
+      window.location.reload();
+    } else {
+      const filteredData = employees.filter((emp) =>
+        emp.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setEmployees(filteredData);
+    }
   };
   return (
     <>
