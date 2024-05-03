@@ -26,9 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use("/upload", uploadController);
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
 
 app.use("/auth", authController);
 app.use("/emp", empolyeeController);
