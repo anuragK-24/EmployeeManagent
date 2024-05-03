@@ -41,7 +41,7 @@ export default function TableRow({ rowData }) {
   return (
     // <table className="TableRow">
     <tr>
-      <td className="TableRow__Id">{rowData.id}</td>
+      <td className="TableRow__Id">{rowData._id}</td>
       <td className="TableRow__Image">
         <img
           style={{ height: "30px", width: "30px" }}
