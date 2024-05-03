@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import LabelledInput from "../LabelledInput/LabelledInput";
+import "./Employees.scss";
 
 export default function Employees() {
   const [hasReloaded, setHasReloaded] = useState(false);
@@ -35,8 +36,8 @@ export default function Employees() {
   const handleSearch = (e) => {
     const searchValue = e.target.value;
     setSearchValue(searchValue);
-  
-    if (searchValue === '' && !hasReloaded) {
+
+    if (searchValue === "" && !hasReloaded) {
       setHasReloaded(true);
       window.location.reload();
     } else {
@@ -47,17 +48,19 @@ export default function Employees() {
     }
   };
   return (
-    <>
-      <div>
-        <Link to="/createEmployee">Create Employee</Link>
-      </div>
+    <div className="Empolyees">
       <LabelledInput
         onChange={handleSearch}
+        classN={"Search"}
         value={searchValue}
+        placeholder={"Search by employee name"}
         label="Search"
         type="text"
       />
       <h3>Total count : {employees.length} </h3>
+      <div className="Empolyees__Create">
+        <Link to="/createEmployee">Create Employee</Link>
+      </div>
       <div style={{ height: "20em", overflow: "auto" }}>
         <table>
           <thead>
@@ -79,7 +82,7 @@ export default function Employees() {
             employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
         </table>
       </div>
-    </>
+    </div>
   );
 }
 

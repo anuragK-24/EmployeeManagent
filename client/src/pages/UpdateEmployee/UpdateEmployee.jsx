@@ -11,6 +11,7 @@ export default function UpdateEmployee() {
   const [error, setError] = useState("");
   const [emptyFields, setEmptyFields] = useState(false);
   const { id } = useParams();
+  const [initalImage, setInitialImage] = useState(null);
   console.log("Value of id ", id);
 
   const [formData, setFormData] = useState({
@@ -42,9 +43,9 @@ export default function UpdateEmployee() {
         designation: data.designation,
         gender: data.gender,
         course: data.course,
-        // image: data.image,
       });
-      console.log(formData);
+      setInitialImage(data.image)
+      
     } catch (error) {
       console.log(error);
     }
@@ -100,11 +101,14 @@ export default function UpdateEmployee() {
         },
         body: JSON.stringify({
           ...formData,
-          image: filename,
+          image: initalImage,
         }),
       };
 
-      const response = await fetch(`http://localhost:3000/emp/update/`+id, options);
+      const response = await fetch(
+        `http://localhost:3000/emp/update/` + id,
+        options
+      );
       const newEmployee = await response.json();
       console.log(newEmployee);
       navigate(`/allEmployee`);
@@ -163,136 +167,132 @@ export default function UpdateEmployee() {
                 });
               }}
             />
-            <div>
-              <label>
-                Designation
-                <select
-                  value={formData.designation}
-                  name="designation"
+            <div style={{ marginBottom: "12px" }}>
+              <label className="UpdateEmployee_Content_FormContainer_Form_Label">
+                Designation{" "}
+              </label>
+              <select
+                value={formData.designation}
+                name="designation"
+                className="UpdateEmployee_Content_FormContainer_Form_Select"
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    designation: e.target.value,
+                  });
+                }}
+              >
+                <option value="">Select designation</option>
+                <option value="HR">HR</option>
+                <option value="Manager">Manager</option>
+                <option value="Sales">Sales</option>
+              </select>
+            </div>
+            <div style={{ marginBottom: "12px" }}>
+              <label className="UpdateEmployee_Content_FormContainer_Form_Label">
+                Gender
+              </label>
+              <div>
+                <input
+                  type="radio"
+                  value="M"
+                  checked={formData.gender === "M"}
                   onChange={(e) => {
                     setFormData({
                       ...formData,
-                      designation: e.target.value,
+                      gender: e.target.value,
                     });
                   }}
-                >
-                  <option value="">Select designation</option>
-                  <option value="HR">HR</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Sales">Sales</option>
-                </select>
-              </label>
-            </div>
-            <div>
-              <label>
-                Gender:
-                <div>
-                  <input
-                    type="radio"
-                    value="M"
-                    checked={formData.gender === "M"}
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        gender: e.target.value,
-                      });
-                    }}
-                  />
-                  M
-                  <input
-                    type="radio"
-                    value="F"
-                    checked={formData.gender === "F"}
-                    onChange={(e) => {
-                      setFormData({
-                        ...formData,
-                        gender: e.target.value,
-                      });
-                    }}
-                  />
-                  F
-                </div>
-              </label>
-            </div>
-            <div>
-              <label>
-                Course:
-                <div>
-                  <input
-                    type="checkbox"
-                    value="MCA"
-                    checked={formData.course.includes("MCA")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          course: [...formData.course, e.target.value],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          course: formData.course.filter(
-                            (course) => course !== e.target.value
-                          ),
-                        });
-                      }
-                    }}
-                  />
-                  MCA
-                  <input
-                    type="checkbox"
-                    value="BCA"
-                    checked={formData.course.includes("BCA")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          course: [...formData.course, e.target.value],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          course: formData.course.filter(
-                            (course) => course !== e.target.value
-                          ),
-                        });
-                      }
-                    }}
-                  />
-                  BCA
-                  <input
-                    type="checkbox"
-                    value="BSC"
-                    checked={formData.course.includes("BSC")}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFormData({
-                          ...formData,
-                          course: [...formData.course, e.target.value],
-                        });
-                      } else {
-                        setFormData({
-                          ...formData,
-                          course: formData.course.filter(
-                            (course) => course !== e.target.value
-                          ),
-                        });
-                      }
-                    }}
-                  />
-                  BSC
-                </div>
-              </label>
-            </div>
-
-            <div className="">
-              <label htmlFor="image">
-                Photo{" "}
-                <img
-                  style={{ height: "2em", width: "2em" }}
-                  src={imgIcon}
-                  alt=""
                 />
+                M
+                <input
+                  type="radio"
+                  value="F"
+                  checked={formData.gender === "F"}
+                  onChange={(e) => {
+                    setFormData({
+                      ...formData,
+                      gender: e.target.value,
+                    });
+                  }}
+                />
+                F
+              </div>
+            </div>
+            <div style={{ marginBottom: "12px" }}>
+              <label className="UpdateEmployee_Content_FormContainer_Form_Label">
+                Course:
+              </label>
+              <div>
+                <input
+                  type="checkbox"
+                  value="MCA"
+                  checked={formData.course.includes("MCA")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setFormData({
+                        ...formData,
+                        course: [...formData.course, e.target.value],
+                      });
+                    } else {
+                      setFormData({
+                        ...formData,
+                        course: formData.course.filter(
+                          (course) => course !== e.target.value
+                        ),
+                      });
+                    }
+                  }}
+                />
+                MCA
+                <input
+                  type="checkbox"
+                  value="BCA"
+                  checked={formData.course.includes("BCA")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setFormData({
+                        ...formData,
+                        course: [...formData.course, e.target.value],
+                      });
+                    } else {
+                      setFormData({
+                        ...formData,
+                        course: formData.course.filter(
+                          (course) => course !== e.target.value
+                        ),
+                      });
+                    }
+                  }}
+                />
+                BCA
+                <input
+                  type="checkbox"
+                  value="BSC"
+                  checked={formData.course.includes("BSC")}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setFormData({
+                        ...formData,
+                        course: [...formData.course, e.target.value],
+                      });
+                    } else {
+                      setFormData({
+                        ...formData,
+                        course: formData.course.filter(
+                          (course) => course !== e.target.value
+                        ),
+                      });
+                    }
+                  }}
+                />
+                BSC
+              </div>
+              {/* </label> */}
+            </div>
+            <div style={{ marginBottom: "12px" }}>
+              <label htmlFor="image">
+                Photo <img style={{ height: "1.2em" }} src={imgIcon} alt="" />
               </label>
               <input
                 type="file"

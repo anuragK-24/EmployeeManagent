@@ -1,0 +1,14 @@
+.Empolyees{
+    display: flex;
+    flex-direction: column;
+    &__Create{
+        a{
+            font-size: 1.5em;
+            float: inline-end;
+            text-decoration: none;
+            font-weight: 700;
+            color: black;
+            padding: 0.5em;
+        }
+    }
+}

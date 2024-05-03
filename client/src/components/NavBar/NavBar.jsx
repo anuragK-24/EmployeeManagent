@@ -16,10 +16,10 @@ function NavBar() {
       </ul>
       <ul className="navbar__leftList">
         {user !== null && (
-          <li className="navbar__item">{user.others.username}</li>
+          <li className="navbar__item">Hello! {user.others.username.toUpperCase()}</li>
         )}
         {user !== null && (
-          <li style={{cursor:"pointer"}} className="navbar__item" onClick={logoutUser}>
+          <li style={{cursor:"pointer", color:"red"}} className="navbar__item" onClick={logoutUser}>
             Logout
           </li>
         )}

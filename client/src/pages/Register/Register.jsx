@@ -6,6 +6,7 @@ import signUp_image from "../../assets/signUp.svg";
 export default function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    username: "",
     email: "",
     password: "",
   });
@@ -20,7 +21,7 @@ export default function Register() {
     e.preventDefault();
     setErrorMsg("");
     try {
-      const response = await fetch("http://localhost:3000/api/register", {
+      const response = await fetch("http://localhost:3000/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,8 +48,18 @@ export default function Register() {
             onSubmit={handleSubmit}
           >
             <LabelledInput
+              id="username"
+              errorMsg={errorMsg}
+              placeholder={"Type your Name"}
+              label="Name"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            <LabelledInput
               id="email"
               errorMsg={errorMsg}
+              placeholder={"Type your Email"}
               label="Email"
               type="email"
               value={formData.email}
@@ -57,20 +68,18 @@ export default function Register() {
             <LabelledInput
               id="password"
               label="Password"
+              placeholder={"Type Password"}
               errorMsg={errorMsg}
               type="password"
               value={formData.password}
               onChange={handleChange}
             />
 
-            <p>
+            <p style={{fontSize:"0.8em"}}>
               Already have an account? <Link to="/login">Login</Link>
             </p>
 
-            <p>
-              Forgot your password? <Link to="/forgot-password">Reset</Link>
-            </p>
-            <button type="submit">Register</button>
+            <button type="submit" className="Register_Content_FormContainer_Form_Button">Register</button>
           </form>
         </div>
         <div className="Register_Content_Image">

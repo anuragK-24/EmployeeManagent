@@ -58,6 +58,7 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
               id="email"
+              placeholder={"Type your Email"}
               label="Email"
               errorMsg={errorMsg}
               type="email"
@@ -67,17 +68,15 @@ export default function Login() {
               id="password"
               value={formData.password}
               onChange={handleChange}
+              placeholder={"Type your Password"}
               label="Password"
               errorMsg={errorMsg}
               type="password"
             />
 
-            <button type="submit">Login</button>
-            <p>
+            <button className="Login_Content_FormContainer_Form_Button" type="submit">Login</button>
+            <p style={{fontSize:"0.8em"}}>
               Dont have an account? <Link to="/register">Register</Link>
-            </p>
-            <p>
-              Forgot your password? <Link to="/forgot-password">Reset</Link>
             </p>
           </form>
         </div>

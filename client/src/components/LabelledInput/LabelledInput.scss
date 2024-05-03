@@ -13,9 +13,21 @@
 .LabelledInput__Input--Error::placeholder {
     color: red;
 }
+.LabelledInput .Search{
+    font-size: 4em;
+}
 .LabelledInput {
     background-color: inherit;
     margin-bottom: 0.5em;
+    &.Search {
+        .LabelledInput__Label {
+            margin-top: 0.5em;
+            font-size: 1.5em;
+        }
+        .LabelledInput__Input {
+            font-size: 1.2em;
+        }
+    }
 
     &__Label {
         background-color: inherit;

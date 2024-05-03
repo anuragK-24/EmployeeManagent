@@ -1,109 +1,128 @@
 .UpdateEmployee {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &_Heading {
+    // padding: 0.7em;
+  }
+
+  &_Content {
     display: flex;
-    flex-direction: column;
+    // margin: 1em;
+    height: 87vh;
+    box-shadow: 2px 1px 20px 6px grey;
+    width: auto;
     align-items: center;
-    &_Heading {
-      padding: 0.7em;
-    }
-  
-    &_Content {
+    border-radius: 13px;
+    padding: 1em;
+    &_Image {
       display: flex;
-      margin: 1em;
-      height: 87vh;
-      box-shadow: 2px 1px 20px 6px grey;
-      width: auto;
+      flex: 1 1;
+      border-right: 2px solid;
+      justify-content: center;
+      img {
+        height: 15em;
+      }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      font-weight: 600;
+      margin-bottom: 3.5em;
+      font-family: cursive;
+    }
+    &_FormContainer {
+      flex: 1;
+      display: flex;
+      justify-content: center;
       align-items: center;
-      border-radius: 13px;
-      padding: 1em;
-      &_Image {
-        display: flex;
-        flex: 1 1;
-        border-right: 2px solid;
-        justify-content: center;
-        img {
-          height: 15em;
+      height: 100%;
+      form {
+        gap: 0.7em;
+      }
+      &_error {
+        color: red;
+        font-size: 0.7em;
+        font-weight: 600;
+        max-width: 16em;
+      }
+      &_Form {
+        font-size: 1.4em;
+        padding: 1em;
+        border-radius: 1em;
+        background: #64d764;
+        max-height: 27em;
+        &_Label {
+          display: flex;
+          flex-direction: column;
+          background-color: inherit;
+          font-weight: 600;
+          margin-bottom: 0.2em;
+          font-size: 0.7em;
+          font-family: sans-serif;
+        }
+        &_Select {
+          height: 1.4em;
+          background-color: aliceblue;
+          width: -webkit-fill-available;
+          padding: 0.1em;
+          border: 1px solid black;
+          border-radius: 0.2em;
+          font-size: 0.9em;
+          font-weight: 300;
+        }
+
+        &_Notification {
+          max-width: 12em;
+          font-size: 0.8em;
+          text-align: center;
+        }
+        &_Error {
+          max-width: 12em;
+          font-size: 0.8em;
+          text-align: center;
+          color: red;
+        }
+        &_Button {
+          border-radius: 0.3em;
+          font-size: 0.7em;
+          background-color: #2f2e41;
+          color: white;
+          margin: auto;
+          display: flex;
+          cursor: pointer;
+          margin-top: 0.7em;
+          padding: 0.3em;
+          &:active {
+            transform: scale(0.9);
+          }
+        }
+        button:disabled {
+          cursor: not-allowed;
+          background-color: rgb(243, 193, 175);
         }
       }
-  
-      h1 {
-        font-size: 2.5em;
-        font-weight: 600;
-        margin-bottom: 3.5em;
-        font-family: cursive;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .UpdateEmployee {
+    &_Heading {
+      margin: 0.5em;
+    }
+    &_Content {
+      height: 60vh;
+      width: auto;
+      &_Image {
+        display: none;
       }
       &_FormContainer {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        form {
-          gap: 0.7em;
-        }
-        &_error {
-          color: red;
-          font-size: 0.7em;
-          font-weight: 600;
-          max-width: 16em;
-        }
         &_Form {
-          font-size: 1.4em;
-          padding: 1em;
-          border-radius: 1em;
-          background: #64d764;
-          max-height: 27em;
-          &_Notification {
-            max-width: 12em;
-            font-size: 0.8em;
-            text-align: center;
-          }
-          &_Error {
-            max-width: 12em;
-            font-size: 0.8em;
-            text-align: center;
-            color: red;
-          }
-          &_Button {
-            border-radius: 0.3em;
-            font-size: 0.7em;
-            background-color: #2f2e41;
-            color: white;
-            margin: auto;
-            display: flex;
-            cursor: pointer;
-            margin-top: 0.7em;
-            padding: 0.3em;
-            &:active {
-              transform: scale(0.9);
-            }
-          }
-          button:disabled {
-            cursor: not-allowed;
-            background-color: rgb(243, 193, 175);
-          }
+          margin: 0px 14px 0px 14px;
         }
       }
     }
   }
-  
-  @media only screen and (max-width: 600px) {
-    .UpdateEmployee {
-      &_Heading {
-        margin: 0.5em;
-      }
-      &_Content {
-        height: 60vh;
-        width: auto;
-        &_Image {
-          display: none;
-        }
-        &_FormContainer {
-          &_Form {
-            margin: 0px 14px 0px 14px;
-          }
-        }
-      }
-    }
-  }
-  
+}

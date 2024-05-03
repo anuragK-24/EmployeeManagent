@@ -11,9 +11,10 @@ export default function LabelledInput({
   id,
   name,
   htmlFor,
+  classN,
 }) {
   return (
-    <div className="LabelledInput">
+    <div className={`LabelledInput ${classN}`}>
     {label && <div className="LabelledInput__Label">{label}</div>}
     <input
       className={`LabelledInput__Input ${errorMsg && errorMsg.length > 0 ? 'LabelledInput__Input--Error' : ''}`}
@@ -41,6 +42,7 @@ LabelledInput.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   htmlFor: PropTypes.string,
+  classN: PropTypes.string,
 };
 
 LabelledInput.defaultProps = {
@@ -52,4 +54,5 @@ LabelledInput.defaultProps = {
   id: "",
   name: "",
   htmlFor: "",
+  classN: "",
 };
