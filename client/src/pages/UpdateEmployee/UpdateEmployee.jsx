@@ -20,7 +20,7 @@ export default function UpdateEmployee() {
     designation: "",
     gender: "",
     course: [],
-    image: "",
+    image: null,
   });
   const findEmployee = async () => {
     try {
@@ -42,9 +42,9 @@ export default function UpdateEmployee() {
         designation: data.designation,
         gender: data.gender,
         course: data.course,
-        image: data.image,
+        // image: data.image,
       });
-      console.log(data);
+      console.log(formData);
     } catch (error) {
       console.log(error);
     }
@@ -75,12 +75,6 @@ export default function UpdateEmployee() {
         };
 
         await fetch("http://localhost:3000/upload/image", options);
-      } else {
-        setEmptyFields(true);
-        setTimeout(() => {
-          setEmptyFields(false);
-        }, 2500);
-        return;
       }
 
       if (
