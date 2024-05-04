@@ -53,6 +53,7 @@ function ProtectedEmployeesRoute() {
 }
 function ProtectedCreateEmployeeRoute() {
   const { user } = useUser();
+  console.log("user value",user)  
   return user ? <CreateEmployee /> : <Login />;
 }
 function ProtectedUpdateEmployeeRoute() {

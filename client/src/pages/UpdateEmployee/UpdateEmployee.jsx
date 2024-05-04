@@ -101,7 +101,7 @@ export default function UpdateEmployee() {
         },
         body: JSON.stringify({
           ...formData,
-          image: initalImage,
+          image: filename===null ? initalImage: filename,
         }),
       };
 
@@ -305,9 +305,13 @@ export default function UpdateEmployee() {
                   });
                 }}
               />
-              {formData.image && (
+              {formData.image ? (
                 <div style={{ marginTop: "12px" }}>
                   Photo name: {formData.image.name}
+                </div>
+              ):(
+                <div style={{ marginTop: "12px" }}>
+                  Photo name: {initalImage}
                 </div>
               )}
             </div>
