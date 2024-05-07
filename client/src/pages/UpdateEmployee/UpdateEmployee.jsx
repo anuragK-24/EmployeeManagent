@@ -13,7 +13,6 @@ export default function UpdateEmployee() {
   const { id } = useParams();
   const [initalImage, setInitialImage] = useState(null);
   const [photoFile, setPhotoFile] = useState(null);
-  // console.log("Value of id ", id);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,7 +22,7 @@ export default function UpdateEmployee() {
     course: [],
     image: null,
   });
-  console.log(formData.image);
+
   const findEmployee = async () => {
     try {
       const response = await fetch(`http://localhost:3000/emp/find/` + id, {
@@ -47,7 +46,7 @@ export default function UpdateEmployee() {
       });
       setInitialImage(data.image);
     } catch (error) {
-      console.log(error);
+      setError(true);
     }
   };
   useEffect(() => {
@@ -56,7 +55,6 @@ export default function UpdateEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData.image);
     try {
       let filename = null;
       if (formData.image) {
@@ -109,8 +107,10 @@ export default function UpdateEmployee() {
         `http://localhost:3000/emp/update/` + id,
         options
       );
-      const newEmployee = await response.json();
-      console.log(newEmployee);
+      // const newEmployee = await response.json();
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
       navigate(`/allEmployee`);
     } catch (error) {
       setError(true);

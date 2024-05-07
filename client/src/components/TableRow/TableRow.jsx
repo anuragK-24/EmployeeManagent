@@ -37,7 +37,7 @@ export default function TableRow({ rowData }) {
       console.log(error);
     }
   };
-  console.log("table row",rowData);
+  
   return (
     // <table className="TableRow">
     <tr>

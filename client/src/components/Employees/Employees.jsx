@@ -25,7 +25,6 @@ export default function Employees() {
       }
       const data = await response.json();
       setEmployees(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

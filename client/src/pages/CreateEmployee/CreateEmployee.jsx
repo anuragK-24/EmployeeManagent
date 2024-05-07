@@ -5,13 +5,11 @@ import { useUser } from "../../context/UserContext";
 import "./CreateEmployee.scss";
 import imgIcon from "../../assets/image_icon.png";
 
-// Import request and crypto
-import { v4 as uuidv4 } from "uuid";
-
 export default function CreateEmployee() {
   const { user } = useUser();
   const [error, setError] = useState(false);
   const [emptyFields, setEmptyFields] = useState(false);
+  const [photoFile, setPhotoFile] = useState(null);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -26,7 +24,6 @@ export default function CreateEmployee() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData.image);
     try {
       let filename = null;
       if (formData.image) {
@@ -82,14 +79,31 @@ export default function CreateEmployee() {
       };
 
       const response = await fetch("http://localhost:3000/emp/create", options);
-      const newEmployee = await response.json();
-      console.log(newEmployee);
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
       navigate(`/allEmployee`);
     } catch (error) {
       setError(true);
       setTimeout(() => {
         setError(false);
       }, 2500);
+    }
+  };
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setFormData({
+      ...formData,
+      image: file,
+    });
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setPhotoFile(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
     }
   };
   return (
@@ -271,16 +285,15 @@ export default function CreateEmployee() {
                 type="file"
                 id="image"
                 style={{ display: "none" }}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    image: e.target.files[0],
-                  });
-                }}
+                onChange={handleImageUpload}
               />
-              {formData.image && (
+              {photoFile && (
                 <div style={{ marginTop: "12px" }}>
-                  Photo name: {formData.image.name}
+                  <img
+                    style={{ height: "30px", width: "30px" }}
+                    src={photoFile}
+                    alt=""
+                  />
                 </div>
               )}
             </div>
