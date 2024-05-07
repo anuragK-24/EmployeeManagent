@@ -304,17 +304,21 @@ export default function CreateEmployee() {
             >
               Create
             </button>
+            {error && (
+              <div
+                className={"CreateEmployee_Content_FormContainer_Form_Error"}
+              >
+                There was an error creating a listing! Try again.
+              </div>
+            )}
+            {emptyFields && (
+              <div
+                className={"CreateEmployee_Content_FormContainer_Form_Error"}
+              >
+                All fields must be filled!
+              </div>
+            )}
           </form>
-          {error && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              There was an error creating a listing! Try again.
-            </div>
-          )}
-          {emptyFields && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              All fields must be filled!
-            </div>
-          )}
         </div>
       </div>
     </div>

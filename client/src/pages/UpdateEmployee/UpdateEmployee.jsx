@@ -8,7 +8,7 @@ import imgIcon from "../../assets/image_icon.png";
 export default function UpdateEmployee() {
   const { user } = useUser();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [emptyFields, setEmptyFields] = useState(false);
   const { id } = useParams();
   const [initalImage, setInitialImage] = useState(null);
@@ -139,7 +139,7 @@ export default function UpdateEmployee() {
 
   return (
     <div className="UpdateEmployee">
-      <h1 className="UpdateEmployee_Heading">Employee Edit</h1>
+      <h1 className="UpdateEmployee_Heading">Employee Update</h1>
       <div className="UpdateEmployee_Content">
         <div className="UpdateEmployee_Content_FormContainer">
           <form
@@ -342,19 +342,23 @@ export default function UpdateEmployee() {
               className="UpdateEmployee_Content_FormContainer_Form_Button"
               type="submit"
             >
-              Edit
+              Update
             </button>
+            {error && (
+              <div
+                className={"CreateEmployee_Content_FormContainer_Form_Error"}
+              >
+                There was an error creating a listing! Try again.
+              </div>
+            )}
+            {emptyFields && (
+              <div
+                className={"CreateEmployee_Content_FormContainer_Form_Error"}
+              >
+                All fields must be filled!
+              </div>
+            )}
           </form>
-          {error && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              There was an error creating a listing! Try again.
-            </div>
-          )}
-          {emptyFields && (
-            <div className={"CreateEmployee_Content_FormContainer_Form_Error"}>
-              All fields must be filled!
-            </div>
-          )}
         </div>
       </div>
     </div>

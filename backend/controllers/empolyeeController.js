@@ -25,23 +25,38 @@ employeeController.get("/getAll", verifyToken, async (req, res) => {
 
 employeeController.post("/create", verifyToken, async (req, res) => {
   try {
+    const existingEmployee = await Employee.findOne({ email: req.body.email });
+
+    if (existingEmployee) {
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
     const newEmployee = await Employee.create(req.body);
     return res.status(201).json(newEmployee);
   } catch (error) {
     console.error(error);
+    return res.status(500).json({ error: "Server error" });
   }
 });
 
 employeeController.put("/update/:id", verifyToken, async (req, res) => {
   try {
+    const existingEmployee = await Employee.findOne({ email: req.body.email });
+
+    if (existingEmployee && String(existingEmployee._id) !== req.params.id) {
+      return res.status(400).json({ error: "Email already exists" });
+    }
+
     const updatedEmployee = await Employee.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
     );
+
     return res.status(200).json(updatedEmployee);
   } catch (error) {
     console.error(error);
+    return res.status(500).json({ error: "Server error" });
   }
 });
 
