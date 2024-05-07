@@ -12,8 +12,7 @@ export default function UpdateEmployee() {
   const [emptyFields, setEmptyFields] = useState(false);
   const { id } = useParams();
   const [initalImage, setInitialImage] = useState(null);
-  console.log("Value of id ", id);
-
+  // console.log("Value of id ", id);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +22,7 @@ export default function UpdateEmployee() {
     course: [],
     image: null,
   });
+  console.log(formData.image)
   const findEmployee = async () => {
     try {
       const response = await fetch(`http://localhost:3000/emp/find/` + id, {
@@ -44,8 +44,7 @@ export default function UpdateEmployee() {
         gender: data.gender,
         course: data.course,
       });
-      setInitialImage(data.image)
-      
+      setInitialImage(data.image);
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +100,7 @@ export default function UpdateEmployee() {
         },
         body: JSON.stringify({
           ...formData,
-          image: filename===null ? initalImage: filename,
+          image: filename === null ? initalImage : filename,
         }),
       };
 
@@ -305,13 +304,20 @@ export default function UpdateEmployee() {
                   });
                 }}
               />
+              
               {formData.image ? (
                 <div style={{ marginTop: "12px" }}>
-                  Photo name: {formData.image.name}
+                  
+                  Photo: {formData.image.name}
                 </div>
-              ):(
+              ) : (
                 <div style={{ marginTop: "12px" }}>
-                  Photo name: {initalImage}
+                  {" "}
+                  <img
+                    style={{ height: "30px", width: "30px" }}
+                    src={`http://localhost:3000/images/${initalImage}`}
+                    alt=""
+                  />
                 </div>
               )}
             </div>
