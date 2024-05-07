@@ -12,6 +12,7 @@ export default function UpdateEmployee() {
   const [emptyFields, setEmptyFields] = useState(false);
   const { id } = useParams();
   const [initalImage, setInitialImage] = useState(null);
+  const [photoFile, setPhotoFile] = useState(null);
   // console.log("Value of id ", id);
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +23,7 @@ export default function UpdateEmployee() {
     course: [],
     image: null,
   });
-  console.log(formData.image)
+  console.log(formData.image);
   const findEmployee = async () => {
     try {
       const response = await fetch(`http://localhost:3000/emp/find/` + id, {
@@ -118,6 +119,24 @@ export default function UpdateEmployee() {
       }, 2500);
     }
   };
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setFormData({
+      ...formData,
+      image: file,
+    });
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setPhotoFile(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="UpdateEmployee">
       <h1 className="UpdateEmployee_Heading">Employee Edit</h1>
@@ -297,18 +316,16 @@ export default function UpdateEmployee() {
                 type="file"
                 id="image"
                 style={{ display: "none" }}
-                onChange={(e) => {
-                  setFormData({
-                    ...formData,
-                    image: e.target.files[0],
-                  });
-                }}
+                onChange={handleImageUpload}
               />
-              
-              {formData.image ? (
+
+              {photoFile ? (
                 <div style={{ marginTop: "12px" }}>
-                  
-                  Photo: {formData.image.name}
+                  <img
+                    style={{ height: "30px", width: "30px" }}
+                    src={photoFile}
+                    alt=""
+                  />
                 </div>
               ) : (
                 <div style={{ marginTop: "12px" }}>
