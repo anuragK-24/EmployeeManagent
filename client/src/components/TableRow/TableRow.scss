@@ -1,6 +1,5 @@
 .TableRow {
     width: 100%;
-    border-collapse: collapse;
     &__Id{
         min-width: 2em;
     }
@@ -31,7 +30,21 @@
         min-width: 3em;
     }
     &__Action{
-        min-width: 5em;
+        min-width: 4em;
+        
+        &__Edit{
+            height: 1.5em;
+            background-color: yellow;
+            cursor: pointer;
+            margin-right: 1em;
+            border-radius: 0.5em;
+        }
+        &__Delete{
+            border-radius: 0.5em;
+            height: 1.5em;
+            background-color: red;
+            cursor: pointer;
+        }
     }
   }
   

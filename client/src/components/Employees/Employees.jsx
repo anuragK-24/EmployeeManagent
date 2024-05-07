@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import LabelledInput from "../LabelledInput/LabelledInput";
 import "./Employees.scss";
-
+import emptyImage from "../../assets/empty.svg";
 export default function Employees() {
   const [hasReloaded, setHasReloaded] = useState(false);
   const { user } = useUser();
@@ -60,7 +60,7 @@ export default function Employees() {
       <div className="Empolyees__Create">
         <Link to="/createEmployee">Create Employee</Link>
       </div>
-      <div style={{ height: "20em", overflow: "auto" }}>
+      <div className="Empolyees__Table">
         <table>
           <thead>
             <tr>
@@ -77,8 +77,17 @@ export default function Employees() {
             </tr>
           </thead>
 
-          {employees.length !== 0 &&
-            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)}
+          {employees.length !== 0 ? (
+            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)
+          ) : (
+            <tr>
+              <td className="Empolyees__Table__NoData" colSpan="10">
+                <h2 className="Empolyees__Table__NoData__Text">
+                  No Employee Found
+                </h2>
+              </td>
+            </tr>
+          )}
         </table>
       </div>
     </div>

@@ -1,14 +1,31 @@
-.Empolyees{
-    display: flex;
-    flex-direction: column;
-    &__Create{
-        a{
-            font-size: 1.5em;
-            float: inline-end;
-            text-decoration: none;
-            font-weight: 700;
-            color: black;
-            padding: 0.5em;
+.ab{
+    background-image: url("../../assets/empty.svg");
+    background-size: auto 100px;
+}
+.Empolyees {
+  display: flex;
+  flex-direction: column;
+  &__Table {
+    padding: 1em;
+    border-collapse: collapse;
+    height: 16em;
+    overflow: auto;
+    &__NoData{
+        height: 15em;
+        &__Text{
+            text-align: center;
         }
     }
+    
+  }
+  &__Create {
+    a {
+      font-size: 1.5em;
+      float: inline-end;
+      text-decoration: none;
+      font-weight: 700;
+      color: black;
+      padding: 0.5em;
+    }
+  }
 }

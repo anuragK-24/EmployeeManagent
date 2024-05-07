@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import "./TableRow.scss";
 import { useUser } from "../../context/UserContext";
-import { useState } from "react";
+import editImage from "../../assets/edit.svg";
+import deleteImage from "../../assets/delete.svg";
+
 export default function TableRow({ rowData }) {
   const { user } = useUser();
-  // const [url , setUrl] = useState('http://localhost:3000/public/images'+rowData.image)
   const navigate = useNavigate();
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -37,10 +38,10 @@ export default function TableRow({ rowData }) {
       console.log(error);
     }
   };
-  
+
   return (
     // <table className="TableRow">
-    <tr>
+    <tr className="TableRow">
       <td className="TableRow__Id">{rowData._id}</td>
       <td className="TableRow__Image">
         <img
@@ -54,11 +55,24 @@ export default function TableRow({ rowData }) {
       <td className="TableRow__Mobile">{rowData.mobile}</td>
       <td className="TableRow__Designation">{rowData.designation}</td>
       <td className="TableRow__Gender">{rowData.gender}</td>
-      <td className="TableRow__Course">{rowData.course.join(', ')}</td>
+      <td className="TableRow__Course">{rowData.course.join(", ")}</td>
       <td className="TableRow__Date">{formatDate(rowData.createdDate)}</td>
-      <td className="TableRow_Action">
-        <button onClick={handleEdit}>Edit</button>/{" "}
-        <button onClick={handleDelete}>Delete</button>
+      <td className="TableRow__Action">
+        <img
+          title="Edit"
+          className="TableRow__Action__Edit"
+          onClick={handleEdit}
+          src={editImage}
+          alt=""
+        />
+
+        <img
+          title="Delete"
+          className="TableRow__Action__Delete"
+          onClick={handleDelete}
+          src={deleteImage}
+          alt=""
+        />
       </td>
     </tr>
     // </table>
