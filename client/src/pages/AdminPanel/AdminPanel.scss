@@ -4,3 +4,12 @@
         height: 55vh;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .AdminPanel{
+        img{
+            height: 25vh;
+        }
+    }
+    
+}

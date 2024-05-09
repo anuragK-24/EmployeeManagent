@@ -5,12 +5,14 @@ import { useUser } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import LabelledInput from "../LabelledInput/LabelledInput";
 import "./Employees.scss";
-import emptyImage from "../../assets/empty.svg";
 export default function Employees() {
-  const [hasReloaded, setHasReloaded] = useState(false);
   const { user } = useUser();
   const [searchValue, setSearchValue] = useState("");
   const [employees, setEmployees] = useState([]);
+  const [filteredEmployees, setFilteredEmployees] = useState(employees);
+  useEffect(() => {
+    setFilteredEmployees(employees);
+  }, [employees]);
   const allEmployee = async () => {
     try {
       const response = await fetch("http://localhost:3000/emp/getAll", {
@@ -32,19 +34,16 @@ export default function Employees() {
   useEffect(() => {
     allEmployee();
   }, []);
-  const handleSearch = (e) => {
-    const searchValue = e.target.value;
+
+  const handleSearch = (event) => {
+    const searchValue = event.target.value;
     setSearchValue(searchValue);
 
-    if (searchValue === "" && !hasReloaded) {
-      setHasReloaded(true);
-      window.location.reload();
-    } else {
-      const filteredData = employees.filter((emp) =>
-        emp.name.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      setEmployees(filteredData);
-    }
+    const filteredData = employees.filter((employee) =>
+      employee.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+    setFilteredEmployees(filteredData);
   };
   return (
     <div className="Empolyees">
@@ -56,7 +55,7 @@ export default function Employees() {
         label="Search"
         type="text"
       />
-      <h3>Total count : {employees.length} </h3>
+      <h3>Total count : {filteredEmployees.length} </h3>
       <div className="Empolyees__Create">
         <Link to="/createEmployee">Create Employee</Link>
       </div>
@@ -77,8 +76,10 @@ export default function Employees() {
             </tr>
           </thead>
 
-          {employees.length !== 0 ? (
-            employees.map((emp) => <TableRow key={emp._id} rowData={emp} />)
+          {filteredEmployees.length !== 0 ? (
+            filteredEmployees.map((emp) => (
+              <TableRow key={emp._id} rowData={emp} />
+            ))
           ) : (
             <tr>
               <td className="Empolyees__Table__NoData" colSpan="10">
